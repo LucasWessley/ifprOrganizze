@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:organizze_moderator/itens_screens/item_screen.dart';
 import 'package:organizze_moderator/models/type_events.dart';
+import 'package:organizze_moderator/splashScreen/my_splash_screen.dart';
+
+import '../global/global.dart';
 
 
 class TypeEventDesignWidget extends StatefulWidget {
@@ -16,6 +21,19 @@ class TypeEventDesignWidget extends StatefulWidget {
 }
 
 class _TypeEventDesignWidgetState extends State<TypeEventDesignWidget> {
+
+  deleteTypeEvent(String catID){
+    FirebaseFirestore.instance
+        .collection('moderators')
+        .doc(sharedPreferences!.getString("uid"))
+        .collection('categories')
+        .doc(catID).delete();
+    
+    Fluttertoast.showToast(msg: "O tipo de evento foi cancelado!");
+    Navigator.push(context, MaterialPageRoute(builder: (c)=>MySplashScreen()));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -53,7 +71,9 @@ class _TypeEventDesignWidgetState extends State<TypeEventDesignWidget> {
                       letterSpacing: 3
                     ),
                     ),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.delete_sweep,
+                    IconButton(onPressed: (){
+                      deleteTypeEvent(widget.model!.catID.toString());
+                    }, icon: Icon(Icons.delete_sweep,
                     color: Colors.red,)),
 
                   ],

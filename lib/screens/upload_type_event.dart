@@ -12,7 +12,6 @@ import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 import 'package:organizze_moderator/widgets/progress_bar.dart';
 
 class UploadTypeEvent extends StatefulWidget {
-  const UploadTypeEvent({Key? key}) : super(key: key);
 
   @override
   State<UploadTypeEvent> createState() => _UploadTypeEventState();

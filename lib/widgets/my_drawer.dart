@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:organizze_moderator/screens/home_screen.dart';
 
 
 import '../global/global.dart';
@@ -70,7 +71,9 @@ class _MyDrawerState extends State<MyDrawer> {
                       "Home",
                       style: TextStyle(color: Colors.black),
                     ),
-                    onTap: () {}),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (c)=> HomeScreen()));
+                    }),
                 // Divider(
                 //   height: 10,
                 //   color: Colors.black,

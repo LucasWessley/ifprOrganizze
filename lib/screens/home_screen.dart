@@ -47,10 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: DelegateHeaderWidget(title: "Categorias"),
-          ),
+          // SliverPersistentHeader(
+          //   pinned: true,
+          //   delegate: DelegateHeaderWidget(title: "Categorias"),
+          // ),
 
           // ESCREVER A QUERY
 
