@@ -228,7 +228,7 @@ class _RegistrationTABPageState extends State<RegistrationTabPage> {
 //phone
                     CustomTextField(
                       textEditingController: phoneTextEditingController,
-                      iconData: Icons.lock,
+                      iconData: Icons.settings_cell,
                       hintText: "Telefone",
                       isObscure: false,
                       enable: true,

@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
 import 'package:organizze_moderator/widgets/progress_bar.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class UploadItemScreen extends StatefulWidget {
   TypeEvent? model;
@@ -40,6 +41,22 @@ class _UploadItemScreenState extends State<UploadItemScreen> {
   bool uploading = false;
   String downloadUrlImage = "";
   String itemUniqueId = DateTime.now().millisecondsSinceEpoch.toString();
+
+  final dateFormatter = MaskTextInputFormatter(mask: '##/##/####',
+      filter: {'#': RegExp(
+        r'[0-9]',),
+      });
+  final phoneFormatter = MaskTextInputFormatter(mask: '## # ####-####',
+      filter: {'#': RegExp(
+        r'[0-9]',),
+      });
+
+  final hourFormatter = MaskTextInputFormatter(mask: '##:##',
+      filter: {'#': RegExp(
+        r'[0-9]',),
+      });
+
+
 
   // String dateTimeInitial = "";
   // String dateTimeEnd = "";
@@ -280,10 +297,13 @@ class _UploadItemScreenState extends State<UploadItemScreen> {
                     child: TextField(
                       controller: itemDateStartTextEditingController,
                       decoration: InputDecoration(
-                        hintText: "Inicio",
+                        hintText: "Data Inicial",
                         hintStyle: TextStyle(color: Colors.black),
                         border: InputBorder.none,
                       ),
+                      inputFormatters: [
+                        dateFormatter
+                      ],
                     ),
                   ),
                 ),
@@ -293,10 +313,13 @@ class _UploadItemScreenState extends State<UploadItemScreen> {
                     child: TextField(
                       controller: itemDateEndTextEditingController,
                       decoration: InputDecoration(
-                        hintText: "Termino",
+                        hintText: "Data Final",
                         hintStyle: TextStyle(color: Colors.black),
                         border: InputBorder.none,
                       ),
+                      inputFormatters: [
+                        dateFormatter
+                      ],
                     ),
                   ),
                 ),
@@ -343,6 +366,9 @@ class _UploadItemScreenState extends State<UploadItemScreen> {
                   hintStyle: TextStyle(color: Colors.black),
                   border: InputBorder.none,
                 ),
+                inputFormatters: [
+                  hourFormatter
+                ],
               ),
             ),
           ),
@@ -364,6 +390,9 @@ class _UploadItemScreenState extends State<UploadItemScreen> {
                   hintStyle: TextStyle(color: Colors.black),
                   border: InputBorder.none,
                 ),
+                inputFormatters: [
+                  hourFormatter
+                ],
               ),
             ),
           ),

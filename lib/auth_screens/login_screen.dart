@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../itens_screens/forgot_pass_screen.dart';
 import '../splashScreen/my_splash_screen.dart';
 import '../global/global.dart';
 import '../screens/home_screen.dart';
 import '../widgets/custom_text_field.dart';
-
 
 import '../widgets/loading_dialog.dart';
 
@@ -41,60 +41,58 @@ class _LoginTabPageState extends State<LoginTabPage> {
       },
     );
     User? currentUser;
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: emailTextEditingController.text.trim(),
       password: passwordTextEditingController.text.trim(),
-    ).then((auth)
-    {
+    )
+        .then((auth) {
       currentUser = auth.user;
-    }).catchError((errorMessage)
-    {
+    }).catchError((errorMessage) {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Erro:  \n $errorMessage");
     });
 
-    if(currentUser != null)
-    {
+    if (currentUser != null) {
       checkIfUserRecordExists(currentUser!);
     }
   }
 
-  checkIfUserRecordExists(User currentUser) async
-  {
+  checkIfUserRecordExists(User currentUser) async {
     await FirebaseFirestore.instance
         .collection("moderators")
         .doc(currentUser.uid)
         .get()
-        .then((record) async
-    {
-      if(record.exists) //variavel record
-          {
+        .then((record) async {
+      if (record.exists) //variavel record
+      {
         //se estiver aprovado
-        if(record.data()!["status"] == "aprovado")
-        {
+        if (record.data()!["status"] == "aprovado") {
           await sharedPreferences!.setString("uid", record.data()!["uid"]);
           await sharedPreferences!.setString("email", record.data()!["email"]);
           await sharedPreferences!.setString("name", record.data()!["name"]);
-          await sharedPreferences!.setString("photoUrl", record.data()!["photoUrl"]);
+          await sharedPreferences!
+              .setString("photoUrl", record.data()!["photoUrl"]);
 
           //puxa a tela de home
-          Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen()));
-        }
-        else //se não estiver aprovado
-            {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) => MySplashScreen()));
+        } else //se não estiver aprovado
+        {
           FirebaseAuth.instance.signOut();
           Navigator.pop(context);
           Fluttertoast.showToast(msg: "Bloqueado, contate um administrador");
         }
-      }
-      else //se não existir
-          {
+      } else //se não existir
+      {
         FirebaseAuth.instance.signOut();
-        Navigator.pop(context, MaterialPageRoute(builder:(c) => MySplashScreen()));
+        Navigator.pop(
+            context, MaterialPageRoute(builder: (c) => MySplashScreen()));
         Fluttertoast.showToast(msg: "Essa conta não existe");
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -120,6 +118,28 @@ class _LoginTabPageState extends State<LoginTabPage> {
                   isObscure: true,
                   enable: true,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ForgotPasswordPage();
+                        }),
+                      );
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          'Esqueceu a senha?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ))),
+
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,

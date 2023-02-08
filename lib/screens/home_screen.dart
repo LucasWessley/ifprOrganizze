@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(color: Colors.green),
         ),
         title: Text(
-          "Organizze",
+          "Organizze Moderador",
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
