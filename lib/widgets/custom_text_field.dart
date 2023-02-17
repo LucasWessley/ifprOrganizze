@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
 class CustomTextField extends StatefulWidget
@@ -8,6 +9,7 @@ class CustomTextField extends StatefulWidget
   String? hintText;
   bool? isObscure = true;
   bool? enable = true;
+  MaskTextInputFormatter? fortmat;
 
   CustomTextField({
     this.textEditingController,
@@ -15,6 +17,7 @@ class CustomTextField extends StatefulWidget
     this.hintText,
     this.isObscure,
     this.enable,
+    this.fortmat
   });
 
   @override

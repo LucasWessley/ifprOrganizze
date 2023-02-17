@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../global/global.dart';
@@ -41,6 +42,11 @@ class _RegistrationTABPageState extends State<RegistrationTabPage> {
       imgXFile;
     });
   }
+
+  final phoneFormatter = MaskTextInputFormatter(mask: '(##) # ####-####',
+      filter: {'#': RegExp(
+        r'[0-9]',),
+      });
 
   formValidation() async {
     if (imgXFile == null) //image is not selected
@@ -225,15 +231,41 @@ class _RegistrationTABPageState extends State<RegistrationTabPage> {
                       isObscure: false,
                       enable: true,
                     ),
+
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 30.0),
+                              child: Icon(Icons.settings_cell),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: TextField(
+                                  controller: phoneTextEditingController,
+                                  decoration: InputDecoration(
+                                    hintText: "Telefone",
+                                    hintStyle: TextStyle(color: Colors.black),
+                                    border: InputBorder.none,
+                                  ),
+                                  inputFormatters: [
+                                    phoneFormatter
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
 //phone
-                    CustomTextField(
-                      textEditingController: phoneTextEditingController,
-                      iconData: Icons.settings_cell,
-                      hintText: "Telefone",
-                      isObscure: false,
-                      enable: true,
-                    ),
-// SizedBox(height: 12,),
+//                     CustomTextField(
+//                       textEditingController: phoneTextEditingController,
+//                       iconData: Icons.settings_cell,
+//                       hintText: "Telefone",
+//                       isObscure: false,
+//                       enable: true,
+//                     ),
+SizedBox(height: 12,),
 //Senha
                     CustomTextField(
                       textEditingController: passwordTextEditingController,

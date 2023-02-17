@@ -4,6 +4,7 @@ import 'package:organizze_moderator/screens/home_screen.dart';
 
 
 import '../global/global.dart';
+import '../screens/upload_type_event.dart';
 import '../splashScreen/my_splash_screen.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -83,7 +84,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 //Meus Certificados
                 ListTile(
                     leading: Icon(
-                      Icons.ac_unit_sharp,
+                      Icons.newspaper_rounded,
                       color: Colors.black,
                     ),
                     title: Text(
@@ -92,6 +93,21 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     onTap: () {
                     }),
+                ListTile(
+                  leading: Icon(
+                    Icons.create_new_folder_outlined,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    "Criar Evento",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => UploadTypeEvent()));
+                  },
+                ),
+
                 //SAIR
                 ListTile(
                     leading: Icon(
@@ -107,6 +123,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (c) => MySplashScreen()));
                     }),
+
               ],
             ),
           ),

@@ -19,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
           appBar: AppBar(
             flexibleSpace: MyBoxDecoration(),
             title: Text(
-              'Organizze',
+              'Organizze Moderador',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

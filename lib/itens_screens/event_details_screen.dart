@@ -39,20 +39,27 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
     });
   }
 
-  editarEvent() {
-    // FirebaseFirestore.instance
-    //     .collection("moderators")
-    //     .doc(sharedPreferences!.getString("uid"))
-    //     .collection("categories")
-    //     .doc(widget.model!.catID)
-    //     .collection("items")
-    //     .doc(widget.model!.itemID)
-    //     .update(data).then((value){
-    //   FirebaseFirestore.instance.collection("items").doc(widget.model!.itemID).delete();
-    //
-    //   Fluttertoast.showToast(msg: "Evento foi excluído!");
-    //   Navigator.push(context, MaterialPageRoute(builder: (c) => MySplashScreen()));
-    // });
+  void editarEvent(
+      String itemID,
+      String itemName,
+      String itemDateStart,
+      String itemDateEnd,
+      String itemLocal,
+      String itemHour,
+      String itemDuration,
+      String itemDescription,
+      String thumbnailUrl) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection("items").doc(itemID).update({
+      "itemName": itemName,
+      "itemDateStart": itemDateStart,
+      "itemDateEnd": itemDateEnd,
+      "itemLocal": itemLocal,
+      "itemHour": itemHour,
+      "itemDuration": itemDuration,
+      "itemDescription": itemDescription,
+      "thumbnailUrl": thumbnailUrl
+    });
   }
 
   @override
@@ -172,7 +179,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   children: [
                     FloatingActionButton.extended(
                       onPressed: () {
-                        editarEvent();
+                        editarEvent(
+                          widget.model!.itemID.toString(),
+                          widget.model!.itemName.toString(),
+                          widget.model!.itemDateStart.toString(),
+                          widget.model!.itemDateEnd.toString(),
+                          widget.model!.itemLocal.toString(),
+                          widget.model!.itemHour.toString(),
+                          widget.model!.itemHour.toString(),
+                          widget.model!.itemDescription.toString(),
+                          widget.model!.thumbnailUrl.toString(),
+
+
+                        );
                       },
                       label: Text("Editar evento"),
                       icon: Icon(
@@ -216,4 +235,17 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       ),
     );
   }
+}
+Future<void> updateEvento(String itemId, String itemName, DateTime itemDateStart, DateTime itemDateEnd, String itemLocal, String itemHour, int itemDuration, String itemDescription, DateTime publishedDate, String thumbnailUrl) async {
+  await FirebaseFirestore.instance.collection("items").doc(itemId).update({
+    "itemName": itemName,
+    "itemDateStart": itemDateStart,
+    "itemDateEnd": itemDateEnd,
+    "itemLocal": itemLocal,
+    "itemHour": itemHour,
+    "itemDuration": itemDuration,
+    "itemDescription": itemDescription,
+    "publishedDate": publishedDate,
+    "thumbnailUrl": thumbnailUrl
+  });
 }

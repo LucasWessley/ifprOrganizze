@@ -32,18 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => UploadTypeEvent()));
-              },
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 30,
-              )),
-        ],
+        actions: [],
       ),
       body: CustomScrollView(
         slivers: [
@@ -58,41 +47,53 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // DESIGN WIDGET
 
+
           StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('moderators')
-                  .doc(sharedPreferences!.getString("uid"))
-                  .collection("categories").orderBy("publishedDate", descending: true)
-                  .snapshots(),
-              builder: (context, AsyncSnapshot dataSnapshot)
-              {
-                if (dataSnapshot.hasData) {
-                  // se existir
-                  // display de categorias
-                 return SliverStaggeredGrid.countBuilder(
-                    crossAxisCount: 1,
-                    staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                    itemBuilder: (context, index) {
-                      TypeEvent typeModel = TypeEvent.fromJson(
-                        dataSnapshot.data.docs[index].data()
-                            as Map<String, dynamic>,
-                      );
-                      return TypeEventDesignWidget(
-                        context: context,
-                        model: typeModel,
-                      );
-                    },
-                    itemCount: dataSnapshot.data.docs.length,
-                  );
-                } else {
-                  //se não existir
-                  return SliverToBoxAdapter(
-                    child: Center(
-                      child: Text('Não há categorias'),
-                    ),
-                  );
-                }
-              }),
+            stream: FirebaseFirestore.instance
+                .collection('moderators')
+                .doc(sharedPreferences!.getString("uid"))
+                .collection("categories")
+                .orderBy("publishedDate", descending: true)
+                .snapshots(),
+            builder: (context, AsyncSnapshot dataSnapshot) {
+              if (dataSnapshot.hasData) {
+                // se existir
+                // display de categorias
+                return SliverStaggeredGrid.countBuilder(
+                  crossAxisCount: 1,
+                  staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                  itemBuilder: (context, index) {
+                    TypeEvent typeModel = TypeEvent.fromJson(
+                      dataSnapshot.data.docs[index].data()
+                          as Map<String, dynamic>,
+                    );
+                    return TypeEventDesignWidget(
+                      context: context,
+                      model: typeModel,
+                    );
+                  },
+                  itemCount: dataSnapshot.data.docs.length,
+                );
+              } else {
+                //se não existir
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Text('Não há categorias'),
+                  ),
+                );
+              }
+            },
+          ),
+          // IconButton(
+          //   onPressed: () {
+          //
+          //   },
+          //   icon: Icon(
+          //     Icons.add,
+          //     color: Colors.white,
+          //     size: 30,
+          //   ),
+          // ),
         ],
       ),
     );
